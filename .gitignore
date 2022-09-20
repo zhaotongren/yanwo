@@ -1,0 +1,7 @@
+# Project exclude paths
+/yanwo-admin/target/
+/yanwo-api/target/
+/yanwo-code/target/
+/yanwo-common/target/
+/yanwo-datasource/target/
+/yanwo-generator/target/

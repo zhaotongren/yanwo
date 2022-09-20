@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.SyscapitalCapitalWithdrawDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.SyscapitalCapitalWithdrawEntity" id="syscapitalCapitalWithdrawMap">
+        <result property="id" column="id"/>
+        <result property="capitalId" column="capital_id"/>
+        <result property="withdrawFee" column="withdraw_fee"/>
+        <result property="userId" column="user_id"/>
+        <result property="status" column="status"/>
+        <result property="withdrawReason" column="withdraw_reason"/>
+        <result property="refuseReason" column="refuse_reason"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="modifiedTime" column="modified_time"/>
+        <result property="bankCard" column="bank_card"/>
+        <result property="realName" column="real_name"/>
+    </resultMap>
+
+    <select id="getWithdrawMoneyByCapital" resultType="java.math.BigDecimal" parameterType="java.lang.Integer">
+        SELECT IFNULL(SUM(withdraw_fee),0) from syscapital_capital_withdraw WHERE capital_id = #{capitalId} AND `status` = #{status}
+    </select>
+
+
+</mapper>

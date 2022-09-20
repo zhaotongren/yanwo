@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("sys:systradeorder:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:systradeorder:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:systradeorder:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">订单编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.tid" placeholder="订单编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品id</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.itemId" placeholder="商品id"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品标题</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.title" placeholder="商品标题"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品价格</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.price" placeholder="商品价格"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">购买数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.num" placeholder="购买数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品图片绝对路径</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.picPath" placeholder="商品图片绝对路径"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">买家id</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.userId" placeholder="买家id"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">应付金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.totalFee" placeholder="应付金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">实付金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.payment" placeholder="实付金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">抵扣金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.welfareFee" placeholder="抵扣金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.postFee" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">成本价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeOrder.costPrice" placeholder="成本价"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/systradeorder.js?_${.now?long}"></script>
+</body>
+</html>

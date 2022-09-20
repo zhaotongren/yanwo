@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <#include "/header.html">
+</head>
+<style>
+    .selectInput {
+        float: left;
+        height: 34px !important;
+        width: 100px;
+    }
+    .imgmax {
+        width: 550px;
+        margin: 50px auto;
+        display: block;
+        border: 1px solid #eaeaea;
+    }
+</style>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <select v-model="q.searchType" class="form-control selectInput">
+                <option value="1">用户名</option>
+                <option value="2">手机号</option>
+            </select>
+            <input @keyup.enter="query()" type="text" v-model="q.searchContent" class="form-control"
+                   style="width: 200px;display:inline;">
+
+            <a class="btn btn-default" @click="query">查询</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <!--直接推荐人-->
+    <div class="modal fade" id="directList" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color:black;">直接推荐人</h4>
+
+                </div>
+                <div class="modal-body">
+                    <span style="text-align: right">直接推荐人数：{{direct}}人</span>
+                    <table id="shTable"
+                           class="color-bordered-table info-bordered-table table table-striped table-bordered table-hover qiqitable">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">昵称</th>
+                            <!--<th style="text-align: center">头像</th>-->
+                            <th style="text-align: center">手机号</th>
+                            <th style="text-align: center">分销身份</th>
+                            <th style="text-align: center">是否是团长</th>
+                            <th style="text-align: center">查看</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="user in users">
+                            <td>
+                                <span>{{user.nickName}}</span>
+                            </td>
+<!--                            <td>
+                                <img :src=user.cerHandPic id="img1" class="imgmax" @click="img(user.cerHandPic)" style="width:80px;height:100px">
+                            </td>-->
+                            <td>
+                                <span>{{user.mobile}}</span>
+                            </td>
+                            <td>
+                                <span v-if="user.memberShip=='0'">未申请</span>
+                                <span v-else-if="user.memberShip==1">待审核</span>
+                                <span v-else-if="user.memberShip==2">审核通过</span>
+                                <span v-else-if="user.memberShip==3">审核驳回</span>
+                                <span v-else>管理员取消</span>
+                            </td>
+                            <td>
+                                <span v-if="user.colonel=='0'">否</span>
+                                <span v-else>是</span>
+                            </td>
+                            <td>
+                                <span>
+                                    <a style='width:10px' class='label label-success' href='#' @click="getIndirect(user.userId)">查看直接推荐人</a>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--间接推荐人-->
+    <div class="modal fade" id="indirectList" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color:black;">间接推荐人</h4>
+                </div>
+                <div class="modal-body">
+                    <span style="text-align: right">间接推荐人数：{{indirect}}人</span>
+                    <table id="" class="color-bordered-table info-bordered-table table table-striped table-bordered table-hover qiqitable">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">昵称</th>
+                            <!--<th style="text-align: center">头像</th>-->
+                            <th style="text-align: center">手机号</th>
+                            <th style="text-align: center">分销身份</th>
+                            <th style="text-align: center">是否是团长</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="user in userdata">
+                            <td>
+                                <span>{{user.nickName}}</span>
+                            </td>
+<!--                            <td>
+                                <img :src=user.cerHandPic id="img2" class="imgmax" @click="img(user.cerHandPic)" style="width:80px;height:100px">
+                            </td>-->
+                            <td>
+                                <span>{{user.mobile}}</span>
+                            </td>
+                            <td>
+                                <span v-if="user.memberShip=='0'">未申请</span>
+                                <span v-else-if="user.memberShip==1">待审核</span>
+                                <span v-else-if="user.memberShip==2">审核通过</span>
+                                <span v-else-if="user.memberShip==3">审核驳回</span>
+                                <span v-else>管理员取消</span>
+                            </td>
+                            <td>
+                                <span v-if="user.colonel=='0'">否</span>
+                                <span v-else>是</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="photomax_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-skuids="">
+        <div class="modal-dialog modal-lg" style="width: 650px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <div class="pull-left"><h4 class="modal-title">查看大图</h4></div>
+                </div>
+                <div class="photomax">
+                    <img src=# id="evidencepicww" class="imgmax" @click="closepic()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/user/userrelation.js?_${.now?long}"></script>
+</body>
+</html>

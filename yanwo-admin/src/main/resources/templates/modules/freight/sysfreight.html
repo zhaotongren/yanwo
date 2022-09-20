@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>运费模板</title>
+    <#include "/header.html">
+    <style>
+        .yunfei_main {
+            margin: 0 auto;
+            width: 900px !important;
+        }
+
+        .yunfei_box {
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .yunfei_l {
+            float: left;
+            padding-right: 10px;
+            width: 100px;
+            height: 34px;
+            text-align: right;
+            line-height: 34px;
+            box-sizing: border-box;
+        }
+
+        .yunfei_r {
+            float: left;
+            width: 700px;
+        }
+
+        .yunfei_tit, .yunfei_input {
+            float: left;
+            margin-left: 15px;
+            padding: 0 10px;
+            width: 200px;
+            height: 34px;
+            line-height: 34px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        .yunfei_city {
+            float: left;
+            margin-left: 15px;
+            position: relative;
+        }
+
+        .yunfei_city .city_txt {
+            padding: 0 10px;
+            width: 200px;
+            height: 34px;
+            line-height: 34px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .yunfei_city .provice_box, .yunfei_city .city_box {
+            padding: 10px 10px;
+            width: 200px;
+            height: 300px;
+            overflow: scroll;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background: #fff;
+            position: absolute;
+            top: 36px;
+            left: 0;
+            z-index: 1;
+        }
+
+        .yunfei_city .city_box {
+            left: 210px
+        }
+
+        .yunfei_city .provice_box p, .yunfei_city .city_box p {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .yunfei_city .provice_box .actived, .yunfei_city .city_box .actived {
+            color: #fff;
+            background: #0f6ab4;
+        }
+
+        .yunfei_add {
+            float: left;
+            margin-top: 2px;
+            margin-left: 20px;
+            width: 70px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 4px;
+            background: #0f6ab4;
+            cursor: pointer;
+        }
+
+        /**/
+        .yunfei_list_box {
+            padding: 0 20px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .yunfei_list_box .list_top {
+            width: 100%;
+            height: 40px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .yunfei_list_box .list_top p {
+            margin: 0;
+            float: left;
+            width: 150px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .yunfei_list_box .list {
+            width: 100%;
+            height: 40px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .yunfei_list_box .list .list_tit {
+            margin: 0;
+            float: left;
+            width: 150px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .yunfei_list_box .list .btn {
+            float: left;
+            padding: 0;
+            margin-top: 4px;
+            width: 55px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 4px;
+            background: #0f6ab4;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            <!--			<#if shiro.hasPermission("sys:sysfreight:update")>
+                        <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+                        </#if>-->
+
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal yunfei_main">
+            <div class="form-group yunfei_box">
+                <div class="yunfei_l">统一运费</div>
+                <div class="yunfei_r">
+                    <input type="text" placeholder="请输入运费名称" class="yunfei_tit" v-model="tongyi_tit">
+                    <input type="number" placeholder="请输入运费" class="yunfei_input" v-model="tongyi_txt">
+                    <input type="hidden" class="form-control" v-model="freightId">
+                </div>
+                <!--<div class="yunfei_add">确定</div>-->
+                <b style="clear: both;display: block"></b>
+            </div>
+            <div class="form-group yunfei_box">
+                <div class="yunfei_l">特殊地区运费</div>
+                <div class="yunfei_r">
+                    <!--<input type="text" placeholder="请输入运费名称" class="yunfei_tit" v-model="teshu_tit">-->
+                    <div class="yunfei_city">
+                        <p class="city_txt" @click="choose_provice">{{city_txt==''?'选择城市':city_txt}}</p>
+                        <div class="provice_box" v-if="provice_box_show==true">
+                            <p :class="provice_actived==item.value?'actived':'provice_list'"
+                               v-for="(item,index) in provice" @click="choose_city(index)">{{item.text}}</p>
+                        </div>
+                        <div class="city_box" v-if="city_box_show==true">
+                            <p :class="city_actived==item.value?'actived':''" v-for="(item,index) in city"
+                               @click="cityChoose_over(index)">{{item.text}}</p>
+                        </div>
+                    </div>
+                    <input type="number" placeholder="请输入运费" class="yunfei_input" v-model="teshu_txt">
+                </div>
+                <div class="yunfei_add" @click="add_teshu_list">确定</div>
+                <b style="clear: both;display: block"></b>
+            </div>
+            <div class="form-group yunfei_box" style="margin-top: 30px;">
+                <div class="yunfei_l">特殊运费列表</div>
+                <div class="yunfei_r yunfei_list_box">
+                    <div class="list_top">
+                        <p>特殊运费模板code</p>
+                        <p>特殊运费模板地区</p>
+                        <p>特殊运费模板金额</p>
+                        <p>操作</p>
+                    </div>
+                    <div class="list" v-for="(item,index) in teshu_list" v-if="teshu_list.length>0">
+                        <p class="list_tit">{{item.cityCode}}</p>
+                        <p class="list_tit">{{item.cityName}}</p>
+                        <p class="list_tit">{{item.fee}}</p>
+                        <p class="btn" @click="del_teshu_list(index)">删除</p>
+                    </div>
+                    <div class="list" v-if="teshu_list.length==0"
+                         style="height: 50px;line-height: 50px;text-align: center">暂无特殊运费
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                   @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </div>
+
+</div>
+<script src="${request.contextPath}/statics/js/city.data.js?_${.now?long}"></script>
+<script src="${request.contextPath}/statics/js/modules/freight/sysfreight.js?_${.now?long}"></script>
+<script>
+    $(document).on('click', function (e) {
+        console.log(e.target.className);
+        if (e.target.className != 'provice_list' && e.target.className != 'city_txt' && e.target.className != 'actived') {
+            vm.city_box_show = false;
+            vm.provice_box_show = false;
+
+        }
+    })
+</script>
+</body>
+</html>

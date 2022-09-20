@@ -1,0 +1,56 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8081
+  servlet:
+    context-path: /
+
+# mysql
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+
+#sever.image.url: http://192.168.9.77:88
+sever.image.url: https://yanwo-image.oss-cn-beijing.aliyuncs.com
+
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.yanwo.entity
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #驼峰下划线转换
+      column-underline: true
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
+  #原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+
+#服务号的应用ID  微信H5内支付使用
+app_id: wx53e0ce07db66b556
+app_secret: c1e9b2c79cbc0a7e69f2fe363440d20b
+#商户号1490295082 1509255961
+MCH_ID: 1578482831
+#API密钥
+API_KEY: gp2ZUmAXc1I9RjCnZttYmyKKfE2TYySg

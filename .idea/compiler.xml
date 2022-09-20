@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="yanwo-api" />
+        <module name="yanwo-code" />
+        <module name="yanwo-admin" />
+        <module name="yanwo-datasource" />
+        <module name="renren-common" />
+        <module name="yanwo-generator" />
+        <module name="yanwo-common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="renren-api" target="1.8" />
+      <module name="renren-common" target="1.8" />
+      <module name="renren-dynamic-datasource" target="1.8" />
+      <module name="renren-generator" target="1.8" />
+      <module name="yanwo" target="1.8" />
+      <module name="yanwo-admin" target="1.8" />
+      <module name="yanwo-api" target="1.8" />
+      <module name="yanwo-code" target="1.8" />
+      <module name="yanwo-common" target="1.8" />
+      <module name="yanwo-datasource" target="1.8" />
+      <module name="yanwo-generator" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="yanwo-admin" options="-parameters" />
+      <module name="yanwo-api" options="-parameters" />
+      <module name="yanwo-code" options="-parameters" />
+      <module name="yanwo-common" options="-parameters" />
+      <module name="yanwo-datasource" options="-parameters" />
+      <module name="yanwo-generator" options="-parameters" />
+    </option>
+  </component>
+</project>

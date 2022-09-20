@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+            <style type="text/css">
+                .ui-jqgrid tr.jqgrow td { white-space: normal !important; height:auto; } /**内容自动换行 */
+                .sousuo{
+                    float: left ;
+                    margin-right: 10px;
+                }
+                .goodstable td{
+                    text-align: center;
+                }
+                .ui-pg-input{
+                    display: inline-block;
+                    height: auto;
+                    width: auto;
+                    font-size: .9em;
+                    margin: 0;
+                    line-height: inherit;
+                    border: none;
+                    padding: 0px 3px;
+                }
+                .fanye tr td{
+                    width: 50px;
+                }
+                .trade-title{
+                    font-size: 12px;
+                    margin: 7px;
+                    padding: 10px 0px 0px 10px;
+                }
+
+                .form-control2 {
+                    display: block;
+                    width: 100%;
+                    height: 34px;
+
+                    font-size: 14px;
+                    line-height: 1.42857143;
+                    color: #555;
+                    background-color: #fff;
+                    background-image: none;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+                    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                    width: 28px;
+                    height: 100px;
+                }
+                /*table tr td{
+                    border: solid grey;
+                }*/
+
+                .bookinfo-table{
+                    margin: 10px 0px 10px 30px;
+                    position: absolute;
+                    display: none;
+                    float: left;
+                    font-size: 12px;
+                    border: 1px solid rgb(185, 183, 183, 0.26);
+                }
+
+
+
+                /*
+                弹窗
+                 */
+                .popupyer ,.popupyer1{
+                    display: none;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    z-index: 10;
+                    background: rgba(0,0,0,0.5);
+                }
+                .popup{
+                    display: none;
+                    width: 500px;
+                    position:fixed;
+                    top:50%;
+                    left:50%;
+                    transform:translateX(-50%) translateY(-50%);
+                    background-color: #FFFFFF;
+                    border-radius: 8px;
+                }
+                .panel-heading{
+                    text-align: center;
+                    border-bottom: 1px solid #ebebeb;
+                }
+                .popup .top label{
+                    display: block;
+                    width: 100%;
+                    height: 30px;
+                    line-height: 30px;
+                }
+                .popup .top label input{
+                    margin-right: 8px;
+                }
+                .popup .button{
+                    text-align: center;
+                }
+                .popup .col-sm-2{
+                    height: 30px;
+                    line-height: 30px;
+                }
+                .popup .top .col-sm-10{
+                    padding-left: 30px;
+                }
+                .checkbox-diy{
+                    display: block;
+                    float: left;
+                    padding: 0px 7px;
+
+                }
+                .checkbox-diy-hide{
+                    display: none;
+                    float: left;
+                    padding: 0px 7px;
+                }
+                .top_cont {
+                    margin-bottom: 20px;
+                    width: 100%;
+                    height: 60px !important;
+                }
+                .top_cont div {
+                    float: left;
+                    margin-right: 20px;
+                    width: 130px;
+                    height: 60px;
+                    border: 1px solid #ebebeb;
+                    border-radius: 4px !important;
+                    box-shadow: 0 0 5px #ebebeb;
+                }
+                .top_cont div b {
+                    font-weight: bold !important;
+                }
+                .top_cont div span, .top_cont div b {
+                     display: block;
+                     width: 100%;
+                     height: 30px;
+                     text-align: center;
+                     line-height: 30px;
+                     color: #333;
+                     font-size: 14px;
+                }
+            </style>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList" >
+        <div class="grid-btn">
+            <select v-model="q.status" style="width: 8%" class="form-control sousuo" >
+                <option value="" >全部</option>
+                <!--<option value="1">待付款</option>-->
+                <option value="2">待发货</option>
+                <option value="3">待收货</option>
+                <option value="4">已完成</option>
+                <option value="5">已完结</option>
+            </select>
+            <input type="text" style="width: 8%" class="form-control sousuo" placeholder="输入订单编号"  v-model="q.tid">
+            <!--<input type="text" style="width: 12%" class="form-control sousuo" placeholder="输入用户昵称"  v-model="q.userName">-->
+            <!--<input type="text" style="width: 12%" class="form-control sousuo" placeholder="输入电话号码"  v-model="q.mobile">-->
+            <input type="date" style="width: 12%" class="form-control sousuo"   v-model="q.startime"/>
+            <span class="sousuo" style="padding: 8px 0px;">至</span>
+            <input type="date" style="width: 12%" class="form-control sousuo"   v-model="q.endtime"/>
+            <button class="btn btn-default" @click="reload2">查询</button>
+            <button class="btn btn-primary" @click="excel">导出</button>
+        </div>
+<!--        <div class="top_cont" style="width: 100%; height: 20px; clear: both;">
+            <div><b style="color: rgb(51, 204, 102); font-size: 10px;">销售总额</b> <span>{{totalFeeSum}}</span></div>
+            <div><b style="color: rgb(255, 51, 51); font-size: 10px;">返利总额</b> <span>{{capitalFeeSum}}</span></div>
+        </div>-->
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <span class="checkbox-diy"   @click="checkall(1)"><i  style="padding: 0px 7px" class="fa fa-circle-thin" aria-hidden="true"></i>全选</span>
+                    <span class="checkbox-diy-hide" @click="checkall(0)"><i style="padding: 0px 7px" class="fa fa-circle" aria-hidden="true"></i>全选</span>
+                </td>
+            </tr>
+            <tr v-for="systradeTrade in page.list">
+                <td :style="shooesstyle(systradeTrade.status)">
+                    <div class="form-group">
+                        <div class="trade-title" @click="checkboxs(systradeTrade.tid)">
+                            <span class="checkbox-diy"  :name="systradeTrade.tid" ><i  class="fa fa-circle-thin" aria-hidden="true"></i></span>
+                            <span class="checkbox-diy-hide" ><i  class="fa fa-circle" aria-hidden="true"></i></span>
+                            <span>订单号：{{systradeTrade.tid}}</span>
+                            <span>下单时间：{{systradeTrade.createdTimeValue}}</span>
+                            <span v-if="systradeTrade.status=='1'" class="badge-green badge-primary badge-position">状态：待付款</span>
+                            <span v-else-if="systradeTrade.status=='2'" class="badge-gray badge-primary badge-position">状态：待发货</span>
+                            <span v-else-if="systradeTrade.status=='3'" class="badge-gray badge-primary badge-position">状态：待收货</span>
+                            <span v-else-if="systradeTrade.status=='4'" class="badge-gray badge-primary badge-position">状态：已完成</span>
+                            <!--<span v-else-if="systradeTrade.status=='5'" class="badge-gray badge-primary badge-position">状态：已完结</span>-->
+                            <span v-else-if="systradeTrade.status=='6'" class="badge-gray badge-primary badge-position">状态：已关闭</span>
+                            <span v-else-if="systradeTrade.status=='7'" class="badge-gray badge-primary badge-position">状态：已取消</span>
+                            <span v-else class="badge-green badge-green badge-position">状态：已完结</span>
+                            <button class="badge-blue badge-primary badge-position" v-if="systradeTrade.status=='2'" @click="updateLogistics(systradeTrade.tid)"><i class="fa fa-pencil-square-o"></i>&nbsp;发货</button>
+                            <button class="badge-blue badge-primary badge-position" v-if="(systradeTrade.status=='2' || systradeTrade.status=='3' || systradeTrade.status=='4' || systradeTrade.status=='5')" @click="getCommission(systradeTrade.tid)"><i class="fa fa-pencil-square-o"></i>&nbsp;返佣详情</button>
+                            <!--<button class="badge-blue badge-primary badge-position" v-if="systradeTrade.status=='2'" @click="delivery(systradeTrade.tid)"><i class="fa fa-pencil-square-o"></i>&nbsp;无需单号发货</button>-->
+                        </div>
+
+
+
+                        <table style="font-size: 12px;border-collapse: inherit !important;padding: 5px 0px 0px 30px">
+
+                            <tr style="height: 15px;">
+                                <td style="width: 30px">
+
+                                </td>
+                                <td rowspan="4" style="vert-align: middle">
+                                    <div style="border: solid 2px grey;margin: 5px"><img style="height: 60px;" :src="systradeTrade.userPic"></div>
+                                </td>
+                                <td rowspan="4" style="width: 30px;">
+                                    <div style="padding: 10px 0px 0px 7px">
+                                        <i @click="showOrders(systradeTrade.tid)" style="display: block" :name="systradeTrade.tid" class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        <i @click="hideOrders(systradeTrade.tid)" style="display: none" class=" fa fa-chevron-up" aria-hidden="true"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    应付金额：{{systradeTrade.totalFee}}<br>
+                                    实付金额：
+                                    {{systradeTrade.payment}}
+                                    <br>
+                                    钱包：{{systradeTrade.welfareFee}}<br>
+
+                                </td>
+                                <td style="width: 30px"></td>
+                                <td>
+                                    真实姓名: {{systradeTrade.realName}}<br>
+                                    备注: {{systradeTrade.remark}}<br>
+                                    昵称: {{systradeTrade.userName}}<br>
+                                </td>
+                                <td style="width: 30px"></td>
+                                <td>
+                                    收货人: {{systradeTrade.receiverName}}<br>
+                                    手机号: {{systradeTrade.receiverMobile}}<br>
+                                    收货地址: {{systradeTrade.receiverAddress}}
+                                </td>
+
+                                <td style="width: 20px"></td>
+                                <td rowspan="4" >
+                                    <span v-if="systradeTrade.payTime!=null && systradeTrade.payTime!=''">付款时间：{{systradeTrade.payTimeValue}}</span><br>
+                                    <span v-if="systradeTrade.consignTime!=null && systradeTrade.consignTime!=''">发货时间：{{systradeTrade.consignTimeValue}}</span><br>
+                                    <span v-if="systradeTrade.endTime!=null && systradeTrade.endTime!=''">完成时间：{{systradeTrade.finishTimeValue}}</span><br>
+                                    <span v-if="systradeTrade.settlementTime!=null && systradeTrade.settlementTime!=''">结算时间：{{systradeTrade.settlementTimeValue}}</span><br>
+                                </td>
+                                <td style="width: 20px"></td>
+                                <td rowspan="2" >
+                                    <span v-if="systradeTrade.courierName!=null && systradeTrade.courierName!=''">快递名称：{{systradeTrade.courierName}}</span><br>
+                                    <span v-if="systradeTrade.courierNumber!=null && systradeTrade.courierNumber!=''">快递单号：{{systradeTrade.courierNumber}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <table :id="systradeTrade.tid" class="bookinfo-table" >
+
+                            <tr  style="width: 100px">
+                                <td  style="text-align: center;">
+                                    <div v-for="order in systradeTrade.orderList" style="float: left;padding: 10px">
+                                        <div style="margin: 5px"><img :title="order.title" style="height: 80px;margin: 1px;border: solid 2px grey;" :src="order.picPath"></div>
+                                        {{order.title.substring(0,6)}}<br>
+                                        <span style="font-size: 10px">现金价：{{order.price}}</span><br>
+                                        <span style="font-size: 10px">数量：{{order.num}}</span><br>
+                                        <span style="font-size: 10px">规格：{{order.specInfo}}</span><br>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table align="center" class="fanye">
+            <tr>
+                <td class="ui-pg-button">
+                    <button title="首页" @click="pageList(1,page.totalPage)" class="form-control glyphicon glyphicon-step-backward"></button>
+                </td>
+                <td class="ui-pg-button">
+                    <button title="上一页" @click="pageList(page.currPage-1,page.totalPage)" class="form-control  glyphicon glyphicon-backward"></button>
+                </td>
+                <td class="">
+                    <input style="width: 50px" class=" glyphicon form-control" type="text" size="2" maxlength="7" v-model="page.currPage" role="textbox">
+                </td>
+                <td class="ui-pg-button">
+                    <button title="下一页" @click="pageList(page.currPage+1,page.totalPage)" class="form-control glyphicon glyphicon-forward"></button>
+                </td>
+                <td class="ui-pg-button">
+                    <button title="最后一页" @click="pageList(page.totalPage,page.totalPage)" class="form-control glyphicon glyphicon-step-forward"></button>
+                </td>
+                <td style="width: 200px">
+                    <span style="padding: 0px 30px">共{{page.totalPage}}页</span>
+                </td>
+                <td>
+                    每页
+                </td>
+                <td>
+                    <select  style="width: 80px" @change="pageList(page.currPage,page.totalPage)" class=" glyphicon form-control" type="text" v-model="q.pageSize">
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </td>
+                <td>
+                    条
+                </td>
+                <td style="width: 150px">
+                    <span>共{{page.totalCount}}条数据</span>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="popupyer" style="height: 2000px;">
+        <div class="popup">
+            <div class="shenhe">
+                <div class="panel-heading">发货</div>
+                <div class="huiJiDanHao">
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">快递名称</div>
+                        <div class="col-sm-10">
+                            <select v-model="systradeTrade.courierName" class="form-control" >
+                                <option value="" selected = "selected">请选择快递公司</option>
+                                <option v-for="start in logistics" :value="start.logisticsName">{{start.logisticsName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">快递单号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="systradeTrade.courierNumber" placeholder="快递单号"/>
+                        </div>
+                    </div>
+                    <div class="form-group button">
+                        <input type="button" class="btn btn-primary"  @click="deliverGoods" value="提交"/>
+                        &nbsp;&nbsp;<input type="button" class="btn btn-warning"  @click="returns" value="返回"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popupyer1" style="height: 2000px;">
+            <div class="popup">
+                <div class="shenhe">
+                    <div class="panel-heading">发货</div>
+                    <div class="huiJiDanHao">
+                        <div class="form-group" style="text-align:center"><h1>确认订单{{systradeTrade.tid}}发货</h1></div>
+                        <div class="form-group button">
+                            <input type="button" class="btn btn-primary"  @click="goods" value="提交"/>
+                            &nbsp;&nbsp;<input type="button" class="btn btn-warning"  @click="returns" value="返回"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="modal fade" id="commissionList" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color:black;">返佣列表</h4>
+
+                </div>
+                <div class="modal-body">
+                    <table id="shTable"
+                           class="color-bordered-table info-bordered-table table table-striped table-bordered table-hover qiqitable">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">昵称</th>
+                            <th style="text-align: center">手机号</th>
+                            <th style="text-align: center">关系</th>
+                            <th style="text-align: center">返佣金额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="user in commissionList">
+                            <td>
+                                <span>{{user.nickName}}</span>
+                            </td>
+                            <td>
+                                <span>{{user.mobile}}</span>
+                            </td>
+                            <td>
+                                <span>{{user.typeName}}</span>
+                            </td>
+                            <td>
+                                <span>{{user.commissionMoney}}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<script src="${request.contextPath}/statics/js/modules/trade/systradetrade.js?_${.now?long}"></script>
+</body>
+</html>

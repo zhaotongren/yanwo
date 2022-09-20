@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.SysactivityCouponDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.SysactivityCouponEntity" id="sysactivityCouponMap">
+        <result property="couponId" column="coupon_id"/>
+        <result property="couponName" column="coupon_name"/>
+        <result property="couponDetails" column="coupon_details"/>
+        <result property="money" column="money"/>
+        <result property="restrictMoney" column="restrict_money"/>
+        <result property="count" column="count"/>
+        <result property="couponType" column="coupon_type"/>
+        <result property="expireTime" column="expire_time"/>
+        <result property="couponStatus" column="coupon_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="alreadyGet" column="already_get"/>
+        <result property="alreadyUse" column="already_use"/>
+        <result property="restrictNumber" column="restrict_number"/>
+    </resultMap>
+
+
+</mapper>

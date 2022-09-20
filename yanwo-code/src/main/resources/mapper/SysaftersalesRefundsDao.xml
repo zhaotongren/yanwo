@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.SysaftersalesRefundsDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.SysaftersalesRefundsEntity" id="sysaftersalesRefundsMap">
+        <result property="refundsId" column="refunds_id"/>
+        <result property="refundBn" column="refund_bn"/>
+        <result property="userId" column="user_id"/>
+        <result property="tid" column="tid"/>
+        <result property="oid" column="oid"/>
+        <result property="refundsType" column="refunds_type"/>
+        <result property="status" column="status"/>
+        <result property="refundsReason" column="refunds_reason"/>
+        <result property="payment" column="payment"/>
+        <result property="totalPrice" column="total_price"/>
+        <result property="refundFee" column="refund_fee"/>
+        <result property="postFee" column="post_fee"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="modifiedTime" column="modified_time"/>
+        <result property="refundNum" column="refund_num"/>
+        <result property="refundFinishTime" column="refund_finish_time"/>
+        <result property="evidencePic" column="evidence_pic"/>
+        <result property="adminExplanation" column="admin_explanation"/>
+        <result property="sendbackData" column="sendback_data"/>
+        <result property="description" column="description"/>
+        <result property="returnAddress" column="return_address"/>
+        <result property="rechargeFee" column="recharge_fee"/>
+    </resultMap>
+    <select id="selectMaxRetundBn" resultType="java.lang.String">
+      select IFNULL(max(refund_bn),'20200416000000001') from sysaftersales_refunds
+    </select>
+
+    <select id="find" resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        a.refunds_id refundsId,
+        a.tid tid,
+        a.oid oid,
+        a.status status,
+        a.payment payment,
+        a.total_price totalPrice,
+        a.refund_fee refundFee,
+        a.post_fee postFee,
+        a.created_time createdTime,
+        a.sendback_data sendbackData,
+        a.refunds_type refundsType,
+        (select nick_name from tb_user where user_id=a.user_id) userName
+        from sysaftersales_refunds a
+        where 1=1
+        <if test="tid !=null and tid!='' ">
+            AND a.tid like CONCAT(CONCAT('%', #{tid,jdbcType=VARCHAR}), '%')
+        </if>
+        <if test="status !=null and status!='' ">
+            AND a.status =#{status}
+        </if>
+        order by a.created_time desc
+    </select>
+
+
+    <select id="selectAftersales" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select
+        count(a.refunds_id) aftersales
+        from sysaftersales_refunds a
+        where a.user_id=#{userId}
+        and a.status in(1,2,4)
+    </select>
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.SyscapitalCapitalDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.SyscapitalCapitalEntity" id="syscapitalCapitalMap">
+        <result property="capitalId" column="capital_id"/>
+        <result property="totalCapital" column="total_capital"/>
+        <result property="userId" column="user_id"/>
+        <result property="walletPwd" column="wallet_pwd"/>
+        <result property="totalIntegral" column="total_integral"/>
+        <result property="totalRecharge" column="total_recharge"/>
+    </resultMap>
+
+
+</mapper>

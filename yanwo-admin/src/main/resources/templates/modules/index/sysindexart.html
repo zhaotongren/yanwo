@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <#include "/header.html">
+        </head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <#if shiro.hasPermission("sys:sysindexart:save")>
+                <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            </#if>
+            <#if shiro.hasPermission("sys:sysindexart:update")>
+                <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+            </#if>
+            <#if shiro.hasPermission("sys:sysindexart:delete")>
+                <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+            </#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">标题</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="sysindexArt.title" placeholder="内容标题"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">图片</div>
+                <div class="col-sm-10">
+                    <img id="imgPathUrl" :src="sysindexArt.imgPath" width="60px"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">上传图片</div>
+                <div class="col-sm-10">
+                    <input id="fileInput" type="file" @change="upload()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">类型</div>
+                <div class="col-sm-10">
+                    <input type="radio" name="sysindexArt.type" v-model="sysindexArt.type" value="1"/>头条
+                    <input type="radio" name="sysindexArt.type" v-model="sysindexArt.type" value="2"/>关于我们
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">图文详情</div>
+                <div class="col-sm-10">
+                    <div class="summernote"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">是否启用</div>
+                <div class="col-sm-10">
+                    <input type="radio" name="sysindexArt.enableFlag" v-model="sysindexArt.enableFlag" value="0"
+                           checked/>启用
+                    <input type="radio" name="sysindexArt.enableFlag" v-model="sysindexArt.enableFlag" value="1"/>未启用
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                       @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="${request.contextPath}/statics/js/summernote.js"></script>
+<script>
+    $(function () {
+        $('.summernote').summernote({
+            height: 400,
+            tabsize: 2,
+            lang: 'zh-CN',
+            toolbar: [
+                ['color', ['color']],
+                ['operate', ['undo', 'redo']],
+                ['magic', ['style']],
+                [
+                    'style',
+                    ['bold', 'italic', 'underline',
+                        'clear']],
+                [
+                    'para',
+                    ['height', 'fontsize', 'ul', 'ol',
+                        'paragraph']],
+                [
+                    'font',
+                    ['strikethrough', 'superscript',
+                        'subscript']],
+                [
+                    'insert',
+                    ['hello', 'video', 'link', 'picture',
+                        'table', 'hr']],// 自定义按钮展示
+                ['layout', ['codeview']],],
+            callbacks: {
+                onImageUpload: function (files) { //the onImageUpload API
+                    vm.upload2(files);
+                    console.log("图片上传回调")
+                }
+            }
+        });
+    })
+</script>
+<script src="${request.contextPath}/statics/js/modules/index/sysindexart.js?_${.now?long}"></script>
+</body>
+</html>

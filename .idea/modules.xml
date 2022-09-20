@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/yanwo.iml" filepath="$PROJECT_DIR$/yanwo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yanwo-admin/yanwo-admin.iml" filepath="$PROJECT_DIR$/yanwo-admin/yanwo-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yanwo-api/yanwo-api.iml" filepath="$PROJECT_DIR$/yanwo-api/yanwo-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yanwo-code/yanwo-code.iml" filepath="$PROJECT_DIR$/yanwo-code/yanwo-code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yanwo-common/yanwo-common.iml" filepath="$PROJECT_DIR$/yanwo-common/yanwo-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yanwo-datasource/yanwo-datasource.iml" filepath="$PROJECT_DIR$/yanwo-datasource/yanwo-datasource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yanwo-generator/yanwo-generator.iml" filepath="$PROJECT_DIR$/yanwo-generator/yanwo-generator.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,105 @@
+
+F
+java:S3740”"/Provide the parametrized type for this generic.(ÄÇå³
+E
+java:S1068!"*Remove this unused "userId" private field.(±­Ú§ÿÿÿÿÿ
+E
+java:S1068%"*Remove this unused "addrId" private field.(½Äò½ıÿÿÿÿ
+E
+java:S1068)"*Remove this unused "status" private field.(¦­œ˜ÿÿÿÿÿ
+G
+java:S1068-",Remove this unused "totalFee" private field.(áÁ£´ÿÿÿÿÿ
+F
+java:S10681"+Remove this unused "payment" private field.(÷”şñùÿÿÿÿ
+C
+java:S10685".Remove this unused "welfareFee" private field.(÷ˆÓ
+D
+java:S10689"/Remove this unused "createdTime" private field.(îÛáJ
+A
+java:S1068="+Remove this unused "payTime" private field.(ñßÏÛ
+J
+java:S1068A"/Remove this unused "consignTime" private field.(ÓïÊéûÿÿÿÿ
+F
+java:S1068E"0Remove this unused "modifiedTime" private field.(¾šÍá
+@
+java:S1068I"+Remove this unused "endTime" private field.(«Î!
+@
+java:S1068M"*Remove this unused "remark" private field.(µ»Ûã
+E
+java:S1068Q"0Remove this unused "receiverName" private field.( ãÇ:
+N
+java:S1068U"3Remove this unused "receiverAddress" private field.(Ñù­úÿÿÿÿ
+M
+java:S1068Y"2Remove this unused "receiverMobile" private field.(æÎ®ÿÿÿÿÿ
+G
+java:S1068]"1Remove this unused "courierNumber" private field.(…Ê¹Ø
+J
+java:S1068a"/Remove this unused "courierName" private field.(·÷š†şÿÿÿÿ
+C
+java:S1068c"-Remove this unused "rateParam" private field.(ô‘šë
+A
+java:S1068g"+Remove this unused "postFee" private field.(Ö¸À±
+F
+java:S1068l"+Remove this unused "deleted" private field.(œ³óşÿÿÿÿ
+E
+java:S1068p"/Remove this unused "courierCode" private field.(¯òÑš
+H
+java:S1068u"-Remove this unused "buyerRate" private field.(ş„É¯üÿÿÿÿ
+M
+java:S1068y"2Remove this unused "settlementTime" private field.(õƒİ¸øÿÿÿÿ
+I
+java:S1068€"-Remove this unused "seckillId" private field.(°¸¿ıÿÿÿÿ
+F
+java:S1068…"/Remove this unused "rechargeFee" private field.(“Ÿã¬
+F
+java:S3740”"/Provide the parametrized type for this generic.(ÄÇå³
+E
+java:S1068!"*Remove this unused "userId" private field.(±­Ú§ÿÿÿÿÿ
+E
+java:S1068%"*Remove this unused "addrId" private field.(½Äò½ıÿÿÿÿ
+E
+java:S1068)"*Remove this unused "status" private field.(¦­œ˜ÿÿÿÿÿ
+G
+java:S1068-",Remove this unused "totalFee" private field.(áÁ£´ÿÿÿÿÿ
+F
+java:S10681"+Remove this unused "payment" private field.(÷”şñùÿÿÿÿ
+C
+java:S10685".Remove this unused "welfareFee" private field.(÷ˆÓ
+D
+java:S10689"/Remove this unused "createdTime" private field.(îÛáJ
+A
+java:S1068="+Remove this unused "payTime" private field.(ñßÏÛ
+J
+java:S1068A"/Remove this unused "consignTime" private field.(ÓïÊéûÿÿÿÿ
+F
+java:S1068E"0Remove this unused "modifiedTime" private field.(¾šÍá
+@
+java:S1068I"+Remove this unused "endTime" private field.(«Î!
+@
+java:S1068M"*Remove this unused "remark" private field.(µ»Ûã
+E
+java:S1068Q"0Remove this unused "receiverName" private field.( ãÇ:
+N
+java:S1068U"3Remove this unused "receiverAddress" private field.(Ñù­úÿÿÿÿ
+M
+java:S1068Y"2Remove this unused "receiverMobile" private field.(æÎ®ÿÿÿÿÿ
+G
+java:S1068]"1Remove this unused "courierNumber" private field.(…Ê¹Ø
+J
+java:S1068a"/Remove this unused "courierName" private field.(·÷š†şÿÿÿÿ
+C
+java:S1068c"-Remove this unused "rateParam" private field.(ô‘šë
+A
+java:S1068g"+Remove this unused "postFee" private field.(Ö¸À±
+F
+java:S1068l"+Remove this unused "deleted" private field.(œ³óşÿÿÿÿ
+E
+java:S1068p"/Remove this unused "courierCode" private field.(¯òÑš
+H
+java:S1068u"-Remove this unused "buyerRate" private field.(ş„É¯üÿÿÿÿ
+M
+java:S1068y"2Remove this unused "settlementTime" private field.(õƒİ¸øÿÿÿÿ
+I
+java:S1068€"-Remove this unused "seckillId" private field.(°¸¿ıÿÿÿÿ
+F
+java:S1068…"/Remove this unused "rechargeFee" private field.(“Ÿã¬

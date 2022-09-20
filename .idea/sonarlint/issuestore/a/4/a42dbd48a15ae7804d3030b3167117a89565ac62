@@ -1,0 +1,43 @@
+
+f
+java:S2095£"JUse try-with-resources or close this "HSSFWorkbook" in a "finally" clause.(ÐÅ±Ìøÿÿÿÿ
+v
+java:S1149›"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰
+n
+java:S3776”"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(ä‰²‰øÿÿÿÿ
+W	java:S125Â"<This block of commented-out lines of code should be removed.(®ÈÖ¤þÿÿÿÿ
+O	java:S106Ó"9Replace this use of System.out or System.err by a logger.(Óûâ²
+W	java:S125ú"<This block of commented-out lines of code should be removed.(Ê™èÿÿÿÿÿ
+P
+java:S4719¡"9Replace charset name argument with StandardCharsets.UTF_8(…‰˜‹
+O	java:S106£"9Replace this use of System.out or System.err by a logger.(ö¬
+i
+java:S3776µ"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(âº¦
+[
+java:S3358Ï"DExtract this nested ternary operation into an independent statement.(™¸ñõ
+K
+java:S3740¾"/Provide the parametrized type for this generic.(ÉØšÖüÿÿÿÿ
+F
+java:S3740À"/Provide the parametrized type for this generic.(µèØ
+F
+java:S3740Á"/Provide the parametrized type for this generic.(ÐõÉÑ
+_
+java:S1192}"JDefine a constant instead of duplicating this literal "startTime" 3 times.(¿ó•D
+c
+java:S1192~"HDefine a constant instead of duplicating this literal "endTime" 3 times.(â´þîýÿÿÿÿ
+m
+java:S2095£"JUse try-with-resources or close this "HSSFWorkbook" in a "finally" clause.(ÐÅ±Ìøÿÿÿÿ8Ç¯µ›µ0
+}
+java:S1149›"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰8é¯µ›µ0
+u
+java:S3776”"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(ä‰²‰øÿÿÿÿ8®°µ›µ0
+^	java:S125Â"<This block of commented-out lines of code should be removed.(®ÈÖ¤þÿÿÿÿ8å°µ›µ0
+V	java:S106Ó"9Replace this use of System.out or System.err by a logger.(Óûâ²8ë°µ›µ0
+^	java:S125ú"<This block of commented-out lines of code should be removed.(Ê™èÿÿÿÿÿ8—±µ›µ0
+W
+java:S4719¡"9Replace charset name argument with StandardCharsets.UTF_8(…‰˜‹8ž±µ›µ0
+V	java:S106£"9Replace this use of System.out or System.err by a logger.(ö¬8¡±µ›µ0
+p
+java:S3776µ"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(âº¦8µ±µ›µ0
+b
+java:S3358Ï"DExtract this nested ternary operation into an independent statement.(™¸ñõ8Ñ±µ›µ0

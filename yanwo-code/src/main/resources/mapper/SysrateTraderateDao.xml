@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.SysrateTraderateDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.SysrateTraderateEntity" id="sysrateTraderateMap">
+        <result property="rateId" column="rate_id"/>
+        <result property="tid" column="tid"/>
+        <result property="oid" column="oid"/>
+        <result property="userId" column="user_id"/>
+        <result property="describeScore" column="describe_score"/>
+        <result property="content" column="content"/>
+        <result property="ratePic" column="rate_pic"/>
+        <result property="anony" column="anony"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="modifiedTime" column="modified_time"/>
+        <result property="disabled" column="disabled"/>
+        <result property="itemId" column="item_id"/>
+    </resultMap>
+
+    <select id="selectRate" parameterType="java.lang.Integer" resultMap="sysrateTraderateMap">
+        select * from sysrate_traderate where item_id=#{itemId}
+        limit 0,3
+    </select>
+
+    <select id="countRate" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(rate_id) num from sysrate_traderate where item_id=#{itemId}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="${request.contextPath}/statics/js/echarts.min.js"></script>
+    <link href="${request.contextPath}/statics/css/welcome.css" rel="stylesheet">
+    <#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <input type="date" style="width: 30%;display:inline;" class="form-control sousuo"   v-model="q.startime"/>
+            <span class="sousuo" style="padding: 8px 0px;display:inline;">至</span>
+            <input type="date" style="width: 30%;display:inline;" class="form-control sousuo"   v-model="q.endtime"/>
+            <button class="btn btn-default" @click="reload2">查询</button>
+        </div>
+        <table style="width: 100%;">
+            <div class=" salesdiv" style="width: 400px">
+                <section class="salesicon section1"><img src="${request.contextPath}/statics/image/sr.png"/></section>
+                <div class="inner">
+                    <h3 class="inner_title">昨日销售总额:</h3><br/>
+                    <h3 class="money">{{systradeTrade.tradeMoney}}</h3>
+                </div>
+            </div>
+            <div class="salesdiv" style="width: 400px">
+                <section class="salesicon section2"><img src="${request.contextPath}/statics/image/sr.png"/></section>
+                <div class="inner">
+                    <h3 class="inner_title">昨日退款总额:</h3><br/>
+                    <h3 class="money">{{systradeTrade.afterSaleMoney}}</h3>
+                </div>
+            </div>
+        </table>
+    </div>
+
+</div>
+<script src="${request.contextPath}/statics/js/modules/trade/systradestatistics.js?_${.now?long}"></script>
+</body>
+</html>

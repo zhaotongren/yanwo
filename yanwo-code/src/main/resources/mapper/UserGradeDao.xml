@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.UserGradeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.UserGradeEntity" id="userGradeMap">
+        <result property="userId" column="user_id"/>
+        <result property="parIdOne" column="par_id_one"/>
+        <result property="parIdTwo" column="par_id_two"/>
+        <result property="createTime" column="create_time"/>
+        <result property="firstUserId" column="first_user_id"/>
+        <result property="twoUserId" column="two_user_id"/>
+    </resultMap>
+
+    <select id="queryAllInvite" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select
+        count(user_id)
+        from
+        tb_user_grade
+        where par_id_one=#{userId} or par_id_two=#{userId}
+    </select>
+
+    <select id="queryIndirectInvite" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select
+        count(user_id)
+        from
+        tb_user_grade
+        where par_id_one=#{userId}
+    </select>
+    <update id="cancelByParIdOne">
+      update tb_user_grade set first_user_id = null where first_user_id = #{parIdOne}
+    </update>
+    <update id="cancelByParIdTwo">
+      update tb_user_grade set first_user_id = null,two_user_id = null where two_user_id = #{parIdTwo}
+    </update>
+
+</mapper>

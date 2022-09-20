@@ -1,0 +1,127 @@
+.salesdiv{
+     width: 22%;
+     float: left;
+     height:150px;
+     margin-right: 10px;
+     text-align: center;
+     border-radius: 10px !important;
+     background: #ffffff;
+ }
+.export{
+    width: 48% !important;
+    float: left;
+    height:150px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 10px !important;
+    background: #ffffff;
+}
+.main{
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -8%;
+    margin-left: 2%;
+}
+.salesicon{
+    width: 35%;
+    height: 100%;
+    float: left;
+    background: #f39c12;
+}
+.section1{
+    background: #00c0ef !important;
+}
+.section2{
+    background: #f39c12 !important;
+}
+.section3{
+    background: #c62437 !important;
+}
+.section4{
+    background: #00a65a !important;
+}
+.salesicon img{
+    width: 50px;
+    height: 50px;
+    margin-top: 30px;
+}
+.inner{
+    float: left;
+    width: 65%;
+    height: 100%;
+}
+h3 {
+    line-height: 30px;
+    font-size: 21px;
+
+
+}
+.inner_title{
+    color: #00c0ef;
+    margin-top: 22px;
+    font-size: 18px;
+}
+.title_h{
+    margin-top: 5px !important;
+}
+.inner .money{
+    color:#333333;
+    font-size: 28px;
+}
+.middle{
+    width: 90%;
+    margin-top: 2%;
+    padding-left: 70px;
+    padding-bottom: 20px;
+    background: #FFFFFF;
+    color: #333333;
+    opacity: 0.9;
+    border-radius: 10px !important;
+    border-top: 3px solid #00c0ef;
+}
+.tabdiv{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.tabdiv h2,.tabdiv h3{
+    color: #333333;
+}
+.tabdiv h3{
+    width: 80%;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #999999;
+}
+.firsttr{
+}
+.leftdiv{
+    margin-top: 2%;
+}
+.rightdiv{
+    margin-top: 2%;
+}
+.bottom-div{
+    width:91%;
+    border-radius: 10px !important;
+    margin-top: 2%;
+}
+.charts-div-1{
+    width: 100%;
+
+}
+.charts-div-2{
+    width:48%;
+    display: inline-block;
+    background-color: #fcfffc;
+    margin-left: 1%;
+    margin-left: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    height: 300px;
+}
+.charts-div-2 h3{
+    background-color: #ccc;
+    padding: 20px 30px;
+    font-weight: 500;
+}

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <#include "/header.html">
+    <style>
+        .upload_img_box {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .upload_img {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .upload_img .img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+        }
+
+        .upload_img_box .del {
+            width: 25px;
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 1;
+        }
+
+        .upload_btn {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .upload_btn img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .upload_btn input {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0;
+        }
+    </style>
+    <style>
+        .selectInput {
+            float: left;
+            height: 34px;
+        }
+
+        .inputText {
+            width: 200px !important;
+        }
+
+        .imgmax {
+            width: 550px;
+            margin: 50px auto;
+            display: block;
+            border: 1px solid #eaeaea;
+        }
+
+        .add_miaoshu_box input {
+            float: left;
+            width: 60%;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .add_miaoshu_box p {
+            float: left;
+            width: 80px;
+            margin-left: 20px;
+            height: 34px;
+            text-align: center;
+            line-height: 34px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .miaoshu_tit {
+            float: left;
+            padding: 0 12px;
+            width: 140px;
+            height: 34px;
+            line-height: 34px;
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border-right: 0;
+        }
+
+        .miaoshu_box p {
+            float: left;
+            margin: 0 10px 10px 0;
+            padding: 0 10px;
+            height: 34px;
+            line-height: 34px;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .miaoshu_box p span {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            text-align: center;
+            line-height: 18px;
+            color: #fff;
+            font-size: 8px;
+            background: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            z-index: 2;
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        .upload_img_box {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .upload_img {
+            width: 100px !important;
+            height: 100px !important;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .upload_img .img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+        }
+
+        .upload_img_box .del {
+            width: 25px;
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 1;
+        }
+
+        .upload_btn {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .upload_btn img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .upload_btn input {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .teacher_input {
+            width: 700px !important;
+        }
+
+        .courseInput {
+            width: 700px !important;
+        }
+
+        .col-sm-4 {
+            width: 300px !important;
+        }
+
+        .ui-jqgrid-sortable th {
+            text-alig: center !important;
+        }
+
+        .shoufei_guize {
+            width: 100%;
+            height: auto;
+        }
+
+        .shoufei_guize_box {
+            padding: 10px 0 10px 10px;
+            float: left;
+            width: 100%;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .shoufei_guize_box_list {
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            height: auto;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .shoufei_guize_box_list .list_item {
+            float: left;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            height: 40px;
+        }
+
+        .shoufei_guize_box_list .guize_item_del {
+            float: left;
+            margin: 5px 0 0 5px;
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            font-size: 14px;
+            background: #0f6ab4;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .shoufei_guize_box_list .list_item p {
+            float: left;
+            margin-right: 1%;
+            height: 40px;
+            line-height: 40px;
+            color: #333;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .shoufei_guize_box_list .list_item input {
+            float: left;
+            padding: 0 5px;
+            height: 40px;
+            line-height: 40px;
+            color: #333;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            box-sizing: border-box;
+        }
+
+        .shoufei_guize_box .guize_add {
+            width: 100px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            font-size: 14px;
+            background: #0f6ab4;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .selectInput {
+            float: left;
+            height: 34px !important;
+            width: 200px;
+        }
+
+        .input_tit {
+            white-space: nowrap;
+            float: left;
+            height: 40px;
+            line-height: 40px;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner {
+             width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="row">
+            <div class="form-group selectInput" style="margin-bottom: 0">
+                <input type="text" class="form-control" v-model="itemtitle" @keyup.enter="query" placeholder="输入标题">
+            </div>
+            <div class="form-group" style="float: left;margin-left: 20px;margin-bottom: 0">
+                <span class="input_tit">商品状态:</span>
+                <select class="form-control" v-model="approveStatus" @keyup.enter="query" style="width: 200px">
+                    <option value="" selected="selected">全部</option>
+                    <option value="1">未上架</option>
+                    <option value="2">已上架</option>
+                </select>
+            </div>
+            <div class="form-group" style="float: left;margin-left: 20px;margin-bottom: 0">
+                <span class="input_tit">商品类型:</span>
+                <select class="form-control" v-model="itemType" @keyup.enter="query" style="width: 200px">
+                    <option value="" selected="selected">全部</option>
+                    <option value="1">积分商品</option>
+                    <option value="0">正常商品</option>
+                </select>
+            </div>
+            <div class="form-group" style="float: left;margin-left: 20px;margin-bottom: 0">
+                <span class="input_tit">推荐商品:</span>
+                <select class="form-control" v-model="isRecommend" @keyup.enter="query" style="width: 200px">
+                    <option value="" selected="selected">全部</option>
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+            <a class="btn btn-default" @click="query" style="float: left;margin: 0 0 15px 15px;display: block;">查询</a>
+
+            <a class="btn btn-primary" @click="add" style="float: left;margin: 0 0 15px 15px;display: block;"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            <a class="btn btn-primary" @click="putAway" style="float: left;margin: 0 0 15px 15px;display: block;"><i class="fa fa-plus"></i>&nbsp;上架</a>
+            <a class="btn btn-primary" @click="downAway" style="float: left;margin: 0 0 15px 15px;display: block;"><i class="fa fa-trash-o"></i>&nbsp;下架</a>
+            <a class="btn btn-primary" @click="del" style="float: left;margin: 0 0 15px 15px;display: block;"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+    <!--			<#if shiro.hasPermission("sys:sysitemitem:update")>
+                <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+                </#if>-->
+
+    <div class="modal fade" id="itemCateModal" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="courseCatModal1">修改商品分类</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" v-model="sysitemItem.itemId">
+                    <div class="col-lg-12">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon" style="width: 130px">商品分类：</span>
+                            <select name="quiz1" class="form-control" v-model="fCatId" style="width: 25%; float: left;"
+                                    @change="getSecondCat(fCatId)">
+                                <option v-for="cat in fcatdata" :value="cat.catId">{{cat.catName}}</option>
+                            </select>
+                            <select name="quiz2" class="form-control" v-model="sysitemItem.catId"
+                                    style="width: 25%;float: left;">
+                                <option v-for="cat in scatdata" :value="cat.catId">{{cat.catName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" @click="updateItemCat(sysitemItem.itemId)">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="skuModal" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="skuModal1">添加积分商品</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" v-model="sysitemItem.itemId">
+                    <div class="col-lg-12">
+                        <table id="itemTable"
+                               class="color-bordered-table info-bordered-table table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>商品规格名称</th>
+                                <th>商品销售价</th>
+                                <th>商品成本价</th>
+                                <th>商品市场价</th>
+                                <th>商品积分售价</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="sku in sku_list">
+                                <td>{{sku.title}}</td>
+                                <td>{{sku.price}}</td>
+                                <td>{{sku.costPrice}}</td>
+                                <td>{{sku.mktPrice}}</td>
+                                <td><input type="number" placeholder="请输入" v-model="sku.integral"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" @click="addIntegral()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="skuModal2" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="">取消积分商品</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" v-model="sysitemItem.itemId">
+                    <div class="col-lg-12">
+                        <table id="itemTable2"
+                               class="color-bordered-table info-bordered-table table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>商品规格名称</th>
+                                <th>商品销售价</th>
+                                <th>商品成本价</th>
+                                <th>商品市场价</th>
+                                <th>商品积分售价</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="sku in sku_list">
+                                <td>{{sku.title}}</td>
+                                <td><input type="number" placeholder="请输入" v-model="sku.price"></td>
+                                <td><input type="number" placeholder="请输入" v-model="sku.costPrice"></td>
+                                <td><input type="number" placeholder="请输入" v-model="sku.mktPrice"></td>
+                                <td>{{sku.integral}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" @click="deleteIntegral()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal" style="width:100%">
+            <div class="form-group">
+                <div class="col-sm-1 control-label">商品标题</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="sysitemItem.title" placeholder="商品标题"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">商品副标题</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="sysitemItem.subTitle" placeholder="商品标题"/>
+                </div>
+            </div>
+            <div class="form-group" v-if="isShow==true">
+                <div class="col-sm-1 control-label">商品分类</div>
+                <div class="col-sm-10">
+                    <select name="quiz1" class="form-control" v-model="fCatId"
+                            style="width: 350px; float: left;" @change="getSecondCat(fCatId)">
+                        <option v-for="cat in fcatdata" :value="cat.catId">{{cat.catName}}</option>
+                    </select>
+                    <select name="quiz2" class="form-control" v-model="sysitemItem.catId"
+                            style="width: 350px;float: left;">
+                        <option v-for="cat in scatdata" :value="cat.catId">{{cat.catName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">图片</div>
+                <div class="col-sm-10">
+                    <div class="upload_img_box" v-for="(item,index) in imageList">
+                        <p class="upload_img"><img class="img" :src="item" style="width: 100%"/></p>
+                        <img class="del" @click="del_pic(index)" src="${request.contextPath}/statics/image/del_pic.png"
+                             alt="">
+                    </div>
+                    <div class="upload_btn">
+                        <img src="${request.contextPath}/statics/image/upload_pic.png" alt="">
+                        <input id="fileInput" type="file" @change="upload()">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">单位</div>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control courseInput" v-model="sysitemItem.unit" placeholder="商品单位">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">自定义销量</div>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control courseInput" v-model="sysitemItem.customSales" placeholder="自定义销量">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">规格</div>
+                <div class="col-sm-11">
+                    <div class="shoufei_guize_box">
+                        <div class="shoufei_guize_box_list" v-for="(item,index) in sku_list">
+                            <div class="list_item" style="width: 185px">
+                                <p style="width: 30px">名称</p>
+                                <input style="width: 150px" type="text" placeholder="请输入" v-model="item.title">
+                            </div>
+                            <div class="list_item" style="width: 125px;position: relative">
+                                <p style="width: 60px">规格图片</p>
+                                <input style="width: 60px;opacity: 0;position: absolute;top: 0;left: 60px;z-index: 1"
+                                       id="file1" type="file" @change="upload1($event,index)">
+                                <img style="width: 60px;float: left; height: 40px;" :src="item.img" alt="上传图片">
+                            </div>
+                            <div class="list_item" style="width: 135px">
+                                <p style="width: 60px">销售价</p>
+                                <input style="width: 70px" type="number" placeholder="请输入" v-model="item.price">
+                            </div>
+                            <div class="list_item" style="width: 135px">
+                                <p style="width: 60px">成本价</p>
+                                <input style="width: 70px" type="number" placeholder="请输入" v-model="item.costPrice">
+                            </div>
+                            <div class="list_item" style="width: 135px" >
+                                <p style="width: 60px">市场价</p>
+                                <input style="width: 70px" type="number" placeholder="请输入" v-model="item.mktPrice">
+                            </div>
+                            <div class="list_item" style="width: 115px" >
+                                <p style="width: 40px">库存</p>
+                                <input style="width: 70px" type="number" placeholder="请输入" v-model="item.store">
+                            </div>
+                            <div class="list_item" style="width: 135px" v-if="isIntegral==true">
+                                <p style="width: 60px">积分</p>
+                                <input style="width: 70px" type="number" placeholder="请输入" v-model="item.integral">
+                            </div>
+                            <div class="list_item" style="width: 135px">
+                                <p style="width: 60px">条形码</p>
+                                <input style="width: 70px" type="text" placeholder="请输入" v-model="item.barcode">
+                            </div>
+                            <div class="guize_item_del" @click="guize_del(index)">删除</div>
+                            <b style="clear: both;display: block"></b>
+                        </div>
+                        <div class="guize_add" @click="guize_add">添加下一条</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">运费模板</div>
+                <div class="col-sm-11">
+                    <select v-model="sysitemItem.freightId" class="form-control selectList" style=""
+                            aria-describedby="basic-addon3">
+                        <option v-for="freight in freights" :value="freight['freightId']">{{freight['name']}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-1 control-label">商品详情</div>
+                <div class="col-sm-11">
+                    <div class="summernote"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                       @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+    <!--设置权重-->
+    <div class="modal fade" id="recommendModal" tabindex='-1' role='dialog' aria-hidden="true" style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: black;">设置权重</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="clear()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <div class="input-group">
+                                <span class="input-group-addon" >权重</span>
+                                <input type="text" class="form-control catInput" v-model="sysitemItem.itemSort" placeholder="权重">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @click="setRecommend()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" @click="clear()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="seckillModal" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">加入秒杀专区</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" v-model="sysitemItem.itemId">
+                    <div>
+                        <table class="color-bordered-table info-bordered-table table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width: 20%">商品规格名称</th>
+                                <th style="width: 10%">商品销售价</th>
+                                <th style="width: 10%">商品成本价</th>
+                                <th style="width: 10%">秒杀价</th>
+                                <th style="width: 10%">秒杀库存</th>
+                                <th style="width: 20%">开始时间</th>
+                                <th style="width: 20%">结束时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(sku,index) in sku_list">
+                                <td style="width: 20%">{{sku.title}}</td>
+                                <td style="width: 10%">{{sku.price}}</td>
+                                <td style="width: 10%">{{sku.costPrice}}</td>
+                                <td style="width: 10%"><input style="width: 100%" type="number" placeholder="请输入" v-model="sku.seckillPrice"></td>
+                                <td style="width: 10%"><input style="width: 100%" type="number" placeholder="请输入" v-model="sku.seckillStock"></td>
+                                <td style="width: 20%">
+                                    <el-date-picker
+                                            v-model="sku_startTime"
+                                            type="datetime"
+                                            placeholder="yyyy-MM-dd HH:mm:ss"
+                                            value-format="timestamp">
+                                    </el-date-picker>
+                                </td>
+                                <td style="width: 20%">
+                                    <el-date-picker
+                                            v-model="sku_endTime"
+                                            type="datetime"
+                                            placeholder="yyyy-MM-dd HH:mm:ss"
+                                            value-format="timestamp">
+                                    </el-date-picker>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" @click="setSeckill()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<link href="${request.contextPath}/statics/plugins/fontawesome-webfont.eot" rel="stylesheet">
+<link href="${request.contextPath}/statics/plugins/fontawesome-webfont.ttf" rel="stylesheet">
+<link href="${request.contextPath}/statics/plugins/fontawesome-webfont.woff" rel="stylesheet">
+<link href="${request.contextPath}/statics/plugins/font-awesome.css" rel="stylesheet">
+
+<script src="${request.contextPath}/statics/js/summernote.js"></script>
+<script>
+    $(function () {
+        $('.summernote').summernote({
+            height: 400,
+            tabsize: 2,
+            lang: 'zh-CN',
+            toolbar: [
+                ['color', ['color']],
+                ['operate', ['undo', 'redo']],
+                ['magic', ['style']],
+                [
+                    'style',
+                    ['bold', 'italic', 'underline',
+                        'clear']],
+                [
+                    'para',
+                    ['height', 'fontsize', 'ul', 'ol',
+                        'paragraph']],
+                [
+                    'font',
+                    ['strikethrough', 'superscript',
+                        'subscript']],
+                [
+                    'insert',
+                    ['hello', 'video', 'link', 'picture',
+                        'table', 'hr']],// 自定义按钮展示
+                ['layout', ['codeview']],],
+            callbacks: {
+                onImageUpload: function (files) { //the onImageUpload API
+                    for(var i = 0;i<files.length;i++){
+                        vm.upload2(files[i]);
+                    }
+                    console.log("图片上传回调");
+                }
+            }
+        });
+    })
+    // layui.use('laydate', function() {
+    //     var laydate = layui.laydate;
+    //     // $('.endTime').each(function(a,b) {
+    //     //     laydate.render({
+    //     //         elem : '#endTime_'+a,
+    //     //         type: 'datetime'
+    //     //     });
+    //     // });
+    //     // $('.startTime').each(function(a,b) {
+    //     //     laydate.render({
+    //     //         elem : '#startTime_'+a,
+    //     //         type: 'datetime'
+    //     //     });
+    //     // });
+    //     //日期时间选择器
+    //     laydate.render({
+    //         elem: '#startTime'
+    //         , type: 'datetime',
+    //         done: function(value, date, endDate){
+    //             console.log(value); //得到日期生成的值，如：2017-08-18
+    //             console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+    //             console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+    //             console.log(new Date(value).getTime()/1000);
+    //             vm.sku_list[0].startTime=new Date(value).getTime()/1000;
+    //         }
+    //     });
+    //     laydate.render({
+    //         elem: '#endTime'
+    //         , type: 'datetime',
+    //         done: function(value, date, endDate){
+    //             console.log(value); //得到日期生成的值，如：2017-08-18
+    //             console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+    //             console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+    //             console.log(new Date(value).getTime()/1000);
+    //             vm.sku_list[0].endTime=new Date(value).getTime()/1000;
+    //         }
+    //     });
+    // })
+</script>
+<script src="${request.contextPath}/statics/js/modules/item/sysitemitem.js?_${.now?long}"></script>
+</body>
+</html>

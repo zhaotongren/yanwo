@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+    <style>
+        .filter-item .el-upload__input{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <input @keyup.enter="query()" type="text" v-model="q.startCard" class="form-control" style="width: 200px;display:inline;" placeholder="请输入开始卡号">
+            <input @keyup.enter="query()" type="text" v-model="q.endCard" class="form-control" style="width: 200px;display:inline;" placeholder="请输入结束卡号">
+            <input @keyup.enter="query()" type="text" v-model="q.nickname" class="form-control" style="width: 200px;display:inline;" placeholder="请输入昵称">
+            <input @keyup.enter="query()" type="text" v-model="q.mobile" class="form-control" style="width: 200px;display:inline;" placeholder="请输入手机号">
+            <a class="btn btn-default"  @click="query">查询</a>
+
+            <a
+                    href="https://yanwo-image.oss-cn-beijing.aliyuncs.com/static/cardsTemplate.xlsx"
+                    class="filter-item"
+                    type="primary"
+                    icon="el-icon-refresh"
+            >
+                <el-button>下载导入模版</el-button>
+            </a>
+
+            <el-upload
+                    ref="uploader"
+                    :show-file-list="false"
+                    :on-success="importSuccess"
+                    :action="`/sys/sysrechargecard/import`"
+                    class="filter-item"
+                    style="display: inline-block;"
+            >
+                <el-button type="primary" @click="handleImport">导入卡信息</el-button>
+            </el-upload>
+
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/capital/sysrechargecard.js?_${.now?long}"></script>
+</body>
+</html>

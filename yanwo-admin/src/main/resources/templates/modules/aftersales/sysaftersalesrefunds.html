@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<style>
+    .imgmax {
+        width: 550px;
+        margin: 50px auto;
+        border: 1px solid #eaeaea;
+    }
+</style>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <!--	<#if shiro.hasPermission("yanwo:sysaftersalesrefunds:save")>
+                <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                </#if>
+                <#if shiro.hasPermission("yanwo:sysaftersalesrefunds:update")>
+                <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+                </#if>
+                <#if shiro.hasPermission("yanwo:sysaftersalesrefunds:delete")>
+                <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+                </#if>-->
+
+                <div class="form-group col-sm-2">
+                    <input type="text" class="form-control" v-model="q.tid" @keyup.enter="query" placeholder="输入订单编号">
+                </div>
+                <div class="form-group col-sm-2">
+                    <select class="form-control" v-model="q.status" @keyup.enter="query">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">待平台审核</option>
+                        <option value="2">待回寄</option>
+                        <option value="3">审核驳回</option>
+                        <option value="4">待退款</option>
+                        <option value="5">退款完成</option>
+                        <option value="6">退款驳回</option>
+                    </select>
+                </div>
+                <a class="btn btn-default" @click="query">查询</a>
+            <button class="btn btn-primary" @click="excel">导出</button>
+            <button class="btn btn-primary" @click="returnAddress">回寄地址</button>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+
+    <div class="modal fade" id="projectModal2" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel2">{{title}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" v-model="sysaftersalesRefunds.refundsId">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon">回寄地址：</span>
+                            <textarea style="width: 715px;height: 40px" class="form-control" v-model="returnAdd.address" placeholder="默认回寄地址"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">审核驳回原因：</span>
+                            <input type="text" class="form-control" v-model="sysaftersalesRefunds.adminExplanation">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" @click="audit_pass(sysaftersalesRefunds.refundsId)">审核通过</button>
+                    <button type="button" class="btn btn-info" @click="audit_fail(sysaftersalesRefunds.refundsId)">审核驳回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="returnModal" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="returnTitle">{{title}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="">回寄地址：</span>
+                            <textarea style="width: 370px;height: 50px" class="form-control" v-model="returnAdd.address" placeholder="默认回寄地址"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" @click="saveAddress()">确定</button>
+                    <button type="button" class="btn btn-default  " data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 查看详细-->
+    <div class="modal fade" id="refundsModal" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;overflow-y: auto;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color:black;">退款详情</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" style="line-height: 20px;">
+                    <table class="multi-cols table consignee">
+                        <thead>
+                        <tr>
+                            <th>订单号：</th>
+                            <th>{{refunds.tid}}</th>
+                        </tr>
+                        <tr>
+                            <th>售后编号：</th>
+                            <th>{{refunds.refundBn}}</th>
+                        </tr>
+                        <tr>
+                            <th>申请时间：</th>
+                            <th>{{formatDate(refunds.createdTime)}}</th>
+                        </tr>
+                        <tr>
+                            <th>售后服务类型：</th>
+                            <th v-if="refunds.refundsType==0">取消订单</th>
+                            <th v-else>退货退款</th>
+                        </tr>
+                        <tr>
+                            <th>申请说明：</th>
+                            <th>{{refunds.refundsReason}}</th>
+                        </tr>
+                        <tr>
+                            <th>处理进度：</th>
+                            <th v-if="refunds.status==1">待平台审核</th>
+                            <th v-else-if="refunds.status==2">待回寄</th>
+                            <th v-else-if="refunds.status==3">审核驳回</th>
+                            <th v-else-if="refunds.status==4">待退款</th>
+                            <th v-else-if="refunds.status==5">退款完成</th>
+                            <th v-else>退款驳回</th>
+                        </tr>
+                        <tr>
+                            <th>处理申请说明：</th>
+                            <th>{{refunds.adminExplanation}}</th>
+                        </tr>
+                        <tr>
+                            <th style="vertical-align:top;">图片凭证信息：</th>
+                            <th v-for="pic in picArray"><img :src=pic id="img" class="imgmax" @click="img(pic)"
+                                     style="width:100px;height:120px"></th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <table id="shTable2" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">子订单号</th>
+                            <th style="text-align: center">商品</th>
+                            <th style="text-align: center">单价(元)</th>
+                            <th style="text-align: center">数量</th>
+                            <th style="text-align: center">总金额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="order in orderData">
+                            <td>{{order.oid}}</td>
+                            <td>{{order.title}}</td>
+                            <td>￥{{order.price}}</td>
+                            <td>{{order.num}}</td>
+                            <td>￥{{refunds.payment}}</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default  " data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="photomax_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-skuids="">
+        <div class="modal-dialog modal-lg" style="width: 650px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <div class="pull-left"><h4 class="modal-title">查看大图</h4></div>
+                </div>
+                <div class="photomax">
+                    <img src=# id="evidencepicww" class="imgmax" @click="closepic()">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/aftersales/sysaftersalesrefunds.js?_${.now?long}"></script>
+</body>
+</html>

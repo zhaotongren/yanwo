@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <#include "/header.html">
+        </head>
+<body>
+<div id="rrapp" v-cloak>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">协议内容</div>
+                <div class="col-sm-10">
+                    <div class="summernote"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                       @click="saveOrUpdate" value="确定"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="${request.contextPath}/statics/js/summernote.js"></script>
+<script>
+    $(function () {
+        $('.summernote').summernote({
+            height: 400,
+            tabsize: 2,
+            lang: 'zh-CN',
+            toolbar: [
+                ['color', ['color']],
+                ['operate', ['undo', 'redo']],
+                ['magic', ['style']],
+                [
+                    'style',
+                    ['bold', 'italic', 'underline',
+                        'clear']],
+                [
+                    'para',
+                    ['height', 'fontsize', 'ul', 'ol',
+                        'paragraph']],
+                [
+                    'font',
+                    ['strikethrough', 'superscript',
+                        'subscript']],
+                [
+                    'insert',
+                    ['hello', 'video', 'link', 'picture',
+                        'table', 'hr']],// 自定义按钮展示
+                ['layout', ['codeview']],],
+            callbacks: {
+                onImageUpload: function (files) { //the onImageUpload API
+                    vm.upload2(files);
+                    console.log("图片上传回调")
+                }
+            }
+        });
+    })
+</script>
+<script src="${request.contextPath}/statics/js/modules/user/agreement.js?_${.now?long}"></script>
+</body>
+</html>

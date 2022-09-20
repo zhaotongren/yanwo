@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.UserDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.UserEntity" id="userMap">
+        <result property="userId" column="user_id"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="cerHandPic" column="cer_hand_pic"/>
+        <result property="mobile" column="mobile"/>
+        <result property="password" column="password"/>
+        <result property="wxOpenId" column="wx_open_id"/>
+        <result property="memberShip" column="member_ship"/>
+        <result property="createTime" column="create_time"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="addr" column="addr"/>
+        <result property="colonel" column="colonel"/>
+        <result property="unionid" column="unionid"/>
+        <result property="publicOpenId" column="public_open_id"/>
+    </resultMap>
+
+
+</mapper>

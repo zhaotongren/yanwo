@@ -1,0 +1,11 @@
+
+x
+java:S3305 "VInject this field value directly into "getGeneratorDao", the only method that uses it.(«ÀÀÇüÿÿÿÿ8ü¢Úžµ0
+s
+java:S3305"VInject this field value directly into "getGeneratorDao", the only method that uses it.(äÝ»¬8ü¢Úžµ0
+s
+java:S3305""VInject this field value directly into "getGeneratorDao", the only method that uses it.(¼‰õ²8ý¢Úžµ0
+s
+java:S3305$"VInject this field value directly into "getGeneratorDao", the only method that uses it.(øúÇ™8ý¢Úžµ0
+L
+java:S1128"*Remove this unused import 'com.yanwo.dao'.(Ÿøúâýÿÿÿÿ8Š£Úžµ0

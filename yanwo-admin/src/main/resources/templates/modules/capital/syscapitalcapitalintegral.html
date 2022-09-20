@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<style>
+    .selectInput{
+        float: left;
+        height: 34px!important;
+        width: 100px;
+    }
+</style>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <select v-model="q.searchType" class="form-control selectInput">
+                <option value="2">订单号</option>
+            </select>
+            <input @keyup.enter="query()" type="text" v-model="q.searchContent" class="form-control" style="width: 200px;display:inline;">
+
+            <a class="btn btn-default"  @click="query">查询</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/capital/syscapitalcapitalintegral.js?_${.now?long}"></script>
+</body>
+</html>

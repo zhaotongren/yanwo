@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.SyscapitalCapitalDetailDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.SyscapitalCapitalDetailEntity" id="syscapitalCapitalDetailMap">
+        <result property="capitalDetailId" column="capital_detail_id"/>
+        <result property="capitalId" column="capital_id"/>
+        <result property="capitalFee" column="capital_fee"/>
+        <result property="capitalType" column="capital_type"/>
+        <result property="capitalDesc" column="capital_desc"/>
+        <result property="tid" column="tid"/>
+        <result property="oid" column="oid"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+
+
+    <select id="findDetailList" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        a.capital_detail_id capitalDetailId,
+        a.capital_id capitalId,
+        a.capital_fee capitalFee,
+        a.capital_type capitalType,
+        a.capital_desc capitalDesc,
+        a.tid tid,
+        a.created_time createdTime,
+        (select nick_name from tb_user b where b.user_id=a.user_id) userName
+        FROM syscapital_capital_detail a
+        WHERE
+        1=1
+        <if test="searchType==1">
+            <if test="searchContent!='' and searchContent!=null">
+                and a.user_id in(select tb.user_id from tb_user  tb where tb.nick_name like CONCAT(CONCAT('%', #{searchContent,jdbcType=VARCHAR}), '%'))
+            </if>
+        </if>
+        <if test="searchType==2">
+            <if test="searchContent!='' and searchContent!=null">
+                and a.tid like CONCAT(CONCAT('%', #{searchContent,jdbcType=VARCHAR}), '%')
+            </if>
+        </if>
+        order by a.created_time desc
+    </select>
+
+    <select id="sumCapitalByParam" parameterType="java.util.Map" resultType="java.math.BigDecimal">
+        select
+          IFNULL(SUM(capital_fee),0)
+        FROM syscapital_capital_detail
+        WHERE capital_type in('1','2','3','4')
+        <if test="tid != null and tid != ''">
+            and tid = #{tid}
+        </if>
+        <if test="userIds != null and userIds.size>0">
+            and user_id in
+            <foreach collection="userIds" separator="," open="(" close=")" item="item" index="index">
+                #{item}
+            </foreach>
+        </if>
+        <if test="start_time != null and start_time != ''">
+            and created_time >= #{start_time}
+        </if>
+        <if test="end_time != null and end_time != ''">
+            and created_time &lt;= #{end_time}
+        </if>
+    </select>
+
+</mapper>

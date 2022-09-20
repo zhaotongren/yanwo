@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yanwo.dao.SystradeLogisticsDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yanwo.entity.SystradeLogisticsEntity" id="systradeLogisticsMap">
+        <result property="eid" column="eid"/>
+        <result property="logisticsName" column="logistics_name"/>
+        <result property="logisticsName" column="logistics_code"/>
+    </resultMap>
+
+
+</mapper>

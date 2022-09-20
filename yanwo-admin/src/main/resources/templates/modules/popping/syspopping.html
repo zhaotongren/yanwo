@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>弹窗</title>
+		<#include "/header.html">
+    <style>
+        .upload_img_box {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .upload_img {
+            width: 100px !important;
+            height: 100px !important;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .upload_img .img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+        }
+
+        .upload_img_box .del {
+            width: 25px;
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 1;
+        }
+
+        .upload_btn {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .upload_btn img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .upload_btn input {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("yanwo:syspopping:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("yanwo:syspopping:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("yanwo:syspopping:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysPopping.poppingName" placeholder="名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">说明</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysPopping.poppingExplain" placeholder="说明"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">图片</div>
+                        <div class="col-sm-10">
+                            <!--<input type="text" class="form-control" v-model="sysPopping.poppingImg" placeholder="图片"/>-->
+                            <div class="upload_img_box" v-if="imgUrl!=''">
+                                <p class="upload_img"><img class="img" :src="imgUrl" style="width: 100%"/></p>
+                                <img class="del" @click="del_pic()" src="${request.contextPath}/statics/image/del_pic.png"
+                                     alt="">
+                            </div>
+                            <div class="upload_btn">
+                                <img src="${request.contextPath}/statics/image/upload_pic.png" alt="">
+                                <input id="fileInput" type="file" @change="upload()">
+                            </div>
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <div class="col-sm-2 control-label">跳转链接</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysPopping.skipUrl" placeholder="跳转链接"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">每天弹出次数</div>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" v-model="sysPopping.poppingDayCount" placeholder="每天的弹出次数"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">每人弹出总次数</div>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" v-model="sysPopping.poppingSum" placeholder="每人弹出的总次数"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">状态</div>
+                        <div class="col-sm-10">
+                            <!--<input type="text" class="form-control" v-model="sysPopping.status" placeholder="状态：0启用；1禁用"/>-->
+                            <label for="qiyong">
+                                <input id="qiyong" type="radio" name="sex" value="0" v-model="sysPopping.status">
+                                启用
+                            </label>
+                            <label for="jinyong" style="margin-left: 10px">
+                                <input id="jinyong" type="radio" name="sex" value="1" v-model="sysPopping.status">
+                                禁用
+                            </label>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">弹出间隔</div>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" v-model="sysPopping.intervalMin" placeholder="弹出间隔(分钟)"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">过期时间</div>
+                        <div class="col-sm-10">
+<!--                            <input type="text" id="endtime" class="form-control" v-model="sysPopping.expiresTime" placeholder="过期时间"/>-->
+                            <el-date-picker
+                                    v-model="sysPopping.expiresTime"
+                                    type="date"
+                                    placeholder="过期时间"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd">
+                            </el-date-picker>
+                        </div>
+                    </div>
+
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/popping/syspopping.js?_${.now?long}"></script>
+<script>
+    // layui.use('laydate', function() {
+    //     var laydate = layui.laydate;
+    //
+    //     //常规用法
+    //     laydate.render({
+    //         elem: '#endtime',
+    //         done:function (value, date) {
+    //             console.log(value);
+    //             console.log(date);
+    //             vm.sysPopping.expiresTime=value;
+    //         }
+    //     });
+    // })
+</script>
+</body>
+</html>

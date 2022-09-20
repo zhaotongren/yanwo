@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<style>
+    .selectInput{
+        float: left;
+        height: 34px!important;
+        width: 100px;
+    }
+</style>
+<body>
+<div id="rrapp" v-cloak>
+
+    <div v-show="showList">
+        <div class="grid-btn">
+            <select v-model="q.searchType" class="form-control selectInput">
+                <option value="1">手机号</option>
+                <option value="2">姓名</option>
+                <option value="3">身份证号</option>
+            </select>
+            <input @keyup.enter="query()" type="text" v-model="q.searchContent" class="form-control" style="width: 200px;display:inline;">
+
+            <a class="btn btn-default"  @click="query">查询</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div class="modal fade" id="auditModal" tabindex='-1' role='dialog' aria-hidden="true"
+         style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel2">审核</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">审核驳回原因：</span>
+                            <input type="text" class="form-control" v-model="reson">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" @click="save_audit('1')">审核通过</button>
+                    <button type="button" class="btn btn-info" @click="save_audit('2')">审核驳回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/user/userapply.js?_${.now?long}"></script>
+</body>
+</html>

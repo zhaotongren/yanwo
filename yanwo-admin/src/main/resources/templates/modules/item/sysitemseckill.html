@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+    <style>
+        .selectInput {
+            float: left;
+            height: 34px !important;
+            width: 200px;
+        }
+        .input_tit {
+            white-space: nowrap;
+            float: left;
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="row">
+            <div class="form-group selectInput" style="margin-bottom: 0">
+                <input type="text" class="form-control" v-model="goodstitle" @keyup.enter="query" placeholder="输入标题">
+            </div>
+            <div class="form-group" style="float: left;margin-left: 20px;margin-bottom: 0">
+                <span class="input_tit">状态:</span>
+                <select class="form-control" v-model="status" @keyup.enter="query" style="width: 200px">
+                    <option value="" selected="selected">全部</option>
+                    <option value="0">未开始</option>
+                    <option value="1">秒杀中</option>
+                    <option value="2">已结束</option>
+                    <option value="3">已关闭</option>
+                </select>
+            </div>
+
+            <a class="btn btn-default" @click="query" style="float: left;margin: 0 0 15px 15px;display: block;">查询</a>
+
+
+            <#if shiro.hasPermission("sys:sysitemseckill:delete")>
+                <a class="btn btn-primary" @click="del" style="float: left;margin: 0 0 15px 15px;display: block;"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;移除</a>
+            </#if>
+            <#if shiro.hasPermission("sys:sysitemseckill:close")>
+                <a class="btn btn-primary" @click="close" style="float: left;margin: 0 0 15px 15px;display: block;"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;关闭</a>
+            </#if>
+        </div>
+
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+					<div class="form-group">
+                        <div class="col-sm-2 control-label">商品名</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysitemSeckill.goodsTitle" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品规格</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysitemSeckill.goodsSpec" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品售价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysitemSeckill.goodsPrice" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品库存</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysitemSeckill.goodsStock" readonly/>
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <div class="col-sm-2 control-label">秒杀库存</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysitemSeckill.seckillStock" placeholder="秒杀库存"/>
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <div class="col-sm-2 control-label">秒杀价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="sysitemSeckill.seckillPrice" placeholder="秒杀价"/>
+                        </div>
+                    </div>
+
+					<div class="form-group">
+                        <div class="col-sm-2 control-label">开始时间</div>
+                        <div class="col-sm-10" v-if="sysitemSeckill.status==1">
+                            <el-date-picker
+                                    v-model="sysitemSeckill.startTime"
+                                    type="datetime"
+                                    placeholder="yyyy-MM-dd HH:mm:ss"
+                                    value-format="timestamp"
+                                    disabled="true"
+                                        >
+                            </el-date-picker>
+                        </div>
+                        <div class="col-sm-10" v-else>
+                            <el-date-picker
+                                    v-model="sysitemSeckill.startTime"
+                                    type="datetime"
+                                    placeholder="yyyy-MM-dd HH:mm:ss"
+                                    value-format="timestamp"
+                            >
+                            </el-date-picker>
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <div class="col-sm-2 control-label">结束时间</div>
+                        <div class="col-sm-10" >
+                            <el-date-picker
+                                    v-model="sysitemSeckill.endTime"
+                                    type="datetime"
+                                    placeholder="yyyy-MM-dd HH:mm:ss"
+                                    value-format="timestamp">
+                            </el-date-picker>
+                        </div>
+                    </div>
+					<div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="${request.contextPath}/statics/js/modules/item/sysitemseckill.js?_${.now?long}"></script>
+</body>
+</html>
